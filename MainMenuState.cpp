@@ -1,6 +1,7 @@
 
 #include <sstream>
 #include "MainMenuState.hpp"
+#include "GameState.hPP"
 #include "DEFINATIONS.hpp"
 #include <iostream>
 
@@ -24,6 +25,11 @@ namespace CE {
         _title.setTexture(this->_data->assets.GetTexture("Game Title"));
 
         _PlayButton.setTexture(this->_data->assets.GetTexture("Play Button"));
+        _title.setPosition((SCREEN_WIDTH /2) - (_title.getGlobalBounds().width/2), _title.getGlobalBounds().height/2);     //set position of title
+        //Globalbouds is used to retrieve the bounding rectangle of a drawable object
+
+        _PlayButton.setPosition((SCREEN_WIDTH /2) - (_PlayButton.getGlobalBounds().width/2),
+        (SCREEN_HEIGHT /2) - (_PlayButton.getGlobalBounds().height/2) );
     }
 
     void MainMenuState::HandleInput()
@@ -34,6 +40,11 @@ namespace CE {
             if (sf::Event::Closed == event.type)
             {
                 _data->window.close();
+            }
+            if(_data->input.IsSpriteClicked( _PlayButton, sf::Mouse::Left, _data->window))
+            {
+                //Replaces mainmenu state with Game state
+                _data->machine.AddState(StateRef(new GameState(_data)), true);
             }
         }
     }
