@@ -13,8 +13,11 @@ namespace CE {
         _data->assets.LoadTexture("Game Background", GAME_BACKGROUND_FILEPATH);
          _data->assets.LoadTexture("Pipe Up", PIPE_UP_FILEPATH);
           _data->assets.LoadTexture("Pipe Down", PIPE_DOWN_FILEPATH);
+          _data->assets.LoadTexture("Land",LAND_FILEPATH);
 
           pipe= new Pipe(_data); //create pipe object
+          land= new Land(_data); //create land object
+
         _background.setTexture(_data->assets.GetTexture("Game Background"));
     }
 
@@ -43,6 +46,8 @@ namespace CE {
              //pipe->SpawnInvisiblePipe();
                 pipe->SpawnBottomPipe();
                 pipe->SpawnTopPipe();
+                land->MoveLand(dt);
+                pipe->RandowmisePipeOffset();
                 clock.restart();     //Resets the time
             }
         }
@@ -53,6 +58,10 @@ namespace CE {
         _data->window.clear();
         _data->window.draw(_background);
         pipe->DrawPipes();
+        land->DrawLand();
+
+
+
         _data->window.display();
     }
    

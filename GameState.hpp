@@ -3,6 +3,7 @@
 #include "State.hpp"
 #include "Game.hpp"
 #include"Pipe.hpp"
+#include"Land.hpp"
 
 
 namespace CE {
@@ -22,6 +23,7 @@ namespace CE {
         sf::Texture _backgroundtexture;
         sf::Sprite _background;
         Pipe *pipe;                     //pointer to a pipe object
+        Land*land;
         sf::Clock clock;                //To check the time passed
 
     };
