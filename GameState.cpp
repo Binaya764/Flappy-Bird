@@ -11,12 +11,17 @@ namespace CE {
     {
         
         _data->assets.LoadTexture("Game Background", GAME_BACKGROUND_FILEPATH);
-         _data->assets.LoadTexture("Pipe Up", PIPE_UP_FILEPATH);
-          _data->assets.LoadTexture("Pipe Down", PIPE_DOWN_FILEPATH);
-          _data->assets.LoadTexture("Land",LAND_FILEPATH);
+        _data->assets.LoadTexture("Pipe Up", PIPE_UP_FILEPATH);
+        _data->assets.LoadTexture("Pipe Down", PIPE_DOWN_FILEPATH);
+        _data->assets.LoadTexture("Land",LAND_FILEPATH);
+        _data->assets.LoadTexture("Bird frame 1",BIRD_FRAME_1_FILEPATH);
+        _data->assets.LoadTexture("Bird frame 2",BIRD_FRAME_2_FILEPATH);
+        _data->assets.LoadTexture("Bird frame 3",BIRD_FRAME_3_FILEPATH);
+        _data->assets.LoadTexture("Bird frame 4",BIRD_FRAME_4_FILEPATH);
 
           pipe= new Pipe(_data); //create pipe object
           land= new Land(_data); //create land object
+          bird= new Bird(_data); //create bird object
 
         _background.setTexture(_data->assets.GetTexture("Game Background"));
     }
@@ -30,8 +35,9 @@ namespace CE {
                 _data->window.close();
 
         }
-        if(_data->input.IsSpriteClicked( _background, sf::Mouse::Left, _data->window)){
-            
+        if(_data->input.IsSpriteClicked( _background, sf::Mouse::Left, _data->window))
+        {
+            bird->Tap();
         }
             
                
@@ -46,11 +52,15 @@ namespace CE {
              //pipe->SpawnInvisiblePipe();
                 pipe->SpawnBottomPipe();
                 pipe->SpawnTopPipe();
-                land->MoveLand(dt);
+               
                 pipe->RandowmisePipeOffset();
                 clock.restart();     //Resets the time
-            }
         }
+    
+    land->MoveLand(dt);
+    bird->Animate(dt);
+    bird->Update(dt);
+    }
     
 
     void GameState::Draw(float dt)
@@ -59,6 +69,7 @@ namespace CE {
         _data->window.draw(_background);
         pipe->DrawPipes();
         land->DrawLand();
+        bird->Draw();
 
 
 
