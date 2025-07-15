@@ -21,6 +21,12 @@ namespace CE
 
         _birdState= BIRD_STATE_STILL;  //Sets the intial state to still
 
+        sf::Vector2f Origin = sf::Vector2f(_birdSprite.getGlobalBounds().width/2,
+         _birdSprite.getGlobalBounds().height/2);
+
+         _birdSprite.setOrigin( Origin);
+          _rotation = 0;
+
        
     }
 
@@ -51,12 +57,27 @@ namespace CE
         if(BIRD_STATE_FALLING == _birdState)
         {
             _birdSprite.move(0, GRAVITY*dt);   //If the state is falling it moves downward due to gravity
+            _rotation += ROTATION_SPEED* dt;
+
+            if(_rotation> 25.0f)
+            {
+                _rotation= 25.0f;
+            }
+           
+
         }
         else if(BIRD_STATE_FLYING == _birdState)
         {
             _birdSprite.move(0, -FLYING_SPEED*dt);  //If the state is flying it moves upward with flying speed.
+            _rotation -= ROTATION_SPEED*dt;
+
+            if(_rotation < -25.0f)
+            {
+                _rotation = -25.0f;
+            }
 
         }
+         _birdSprite.setRotation( _rotation);
 
         if(_movementclock.getElapsedTime().asSeconds() > FLYING_DURATION)
         {
@@ -70,4 +91,9 @@ namespace CE
         _movementclock.restart();  //TO Know the accurate time since the click
         _birdState = BIRD_STATE_FLYING;
     }
+
+     const sf:: Sprite &Bird::GetSprite() const
+     {
+        return _birdSprite;
+     }
 }

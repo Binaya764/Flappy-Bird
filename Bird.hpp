@@ -17,6 +17,8 @@ namespace CE
         void Update(float dt);
         void Tap();
 
+        const sf:: Sprite &GetSprite() const;
+
         private:
         GameDataRef _data;
         std::vector<sf::Texture> _animationFrames;
@@ -27,6 +29,7 @@ namespace CE
         sf::Sprite _birdSprite;
 
         int _birdState;
+        float _rotation;
 
     };
 

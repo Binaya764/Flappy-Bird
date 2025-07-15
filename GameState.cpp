@@ -1,29 +1,29 @@
 #include <iostream>
 #include "GameState.hpp"
 #include "DEFINATIONS.hpp"
- 
 
 namespace CE {
 
-    GameState::GameState(GameDataRef data) : _data(data) { }
+    GameState::GameState(GameDataRef data) : _data(data) {}
 
     void GameState::Init()
     {
-        
         _data->assets.LoadTexture("Game Background", GAME_BACKGROUND_FILEPATH);
         _data->assets.LoadTexture("Pipe Up", PIPE_UP_FILEPATH);
         _data->assets.LoadTexture("Pipe Down", PIPE_DOWN_FILEPATH);
-        _data->assets.LoadTexture("Land",LAND_FILEPATH);
-        _data->assets.LoadTexture("Bird frame 1",BIRD_FRAME_1_FILEPATH);
-        _data->assets.LoadTexture("Bird frame 2",BIRD_FRAME_2_FILEPATH);
-        _data->assets.LoadTexture("Bird frame 3",BIRD_FRAME_3_FILEPATH);
-        _data->assets.LoadTexture("Bird frame 4",BIRD_FRAME_4_FILEPATH);
+        _data->assets.LoadTexture("Land", LAND_FILEPATH);
+        _data->assets.LoadTexture("Bird frame 1", BIRD_FRAME_1_FILEPATH);
+        _data->assets.LoadTexture("Bird frame 2", BIRD_FRAME_2_FILEPATH);
+        _data->assets.LoadTexture("Bird frame 3", BIRD_FRAME_3_FILEPATH);
+        _data->assets.LoadTexture("Bird frame 4", BIRD_FRAME_4_FILEPATH);
 
-          pipe= new Pipe(_data); //create pipe object
-          land= new Land(_data); //create land object
-          bird= new Bird(_data); //create bird object
+        pipe = new Pipe(_data);  // Create pipe object
+        land = new Land(_data);  // Create land object
+        bird = new Bird(_data);  // Create bird object
 
         _background.setTexture(_data->assets.GetTexture("Game Background"));
+
+        _gameState = GameStates::eReady;
     }
 
     void GameState::HandleInput()
@@ -33,49 +33,60 @@ namespace CE {
         {
             if (event.type == sf::Event::Closed)
                 _data->window.close();
+        }
 
-        }
-        if(_data->input.IsSpriteClicked( _background, sf::Mouse::Left, _data->window))
+        if (_data->input.IsSpriteClicked(_background, sf::Mouse::Left, _data->window))
         {
-            bird->Tap();
+            if (GameStates::eGameOver != _gameState)
+            {
+                _gameState = GameStates::ePlaying;
+                bird->Tap();
+            }
         }
-            
-               
     }
 
     void GameState::Update(float dt)
     {
-        pipe->MovePipes(dt);
-
-        if(clock.getElapsedTime().asSeconds()>PIPE_SPAWN_FREQUENCY)
+        if (GameStates::eGameOver != _gameState)
         {
-             //pipe->SpawnInvisiblePipe();
+            bird->Animate(dt);
+            land->MoveLand(dt);
+        }
+
+        if (GameStates::ePlaying == _gameState)
+        {
+            pipe->MovePipes(dt);
+
+            if (clock.getElapsedTime().asSeconds() > PIPE_SPAWN_FREQUENCY)
+            {
                 pipe->SpawnBottomPipe();
                 pipe->SpawnTopPipe();
-               
                 pipe->RandowmisePipeOffset();
-                clock.restart();     //Resets the time
+                clock.restart();
+            }
+
+            bird->Update(dt);
+
+            std::vector<sf::Sprite> landSprites = land->GetSprites();
+            for (std::size_t i = 0; i < landSprites.size(); i++)
+            {
+                if (collision.CheckSpriteCollision(bird->GetSprite(), landSprites.at(i)))
+                {
+                    _gameState = GameStates::eGameOver;
+                }
+            }
         }
-    
-    land->MoveLand(dt);
-    bird->Animate(dt);
-    bird->Update(dt);
     }
-    
 
     void GameState::Draw(float dt)
     {
         _data->window.clear();
+
         _data->window.draw(_background);
         pipe->DrawPipes();
         land->DrawLand();
         bird->Draw();
 
-
-
         _data->window.display();
     }
-   
 }
-
-

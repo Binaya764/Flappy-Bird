@@ -38,4 +38,9 @@ namespace CE{
             
         }
     }
+
+    const std:: vector<sf::Sprite> &Land::GetSprites() const
+    {
+        return _landSprites;
+    }
 }
