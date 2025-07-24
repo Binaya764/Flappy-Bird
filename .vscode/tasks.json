@@ -2,29 +2,54 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Build Flappy Bird",
+      "label": "Build flappybird",
       "type": "shell",
-      "command": "bash",
+      "command": "g++",
       "args": [
-        "-c",
-        "g++ *.cpp -g -o flappybird.exe -mconsole -std=c++17 -Wall -DSFML_STATIC -I\"E:/SFML/External library/SFML/SFML-2.6.2-windows-gcc-13.1.0-mingw-64-bit/SFML-2.6.2/include\" -L\"E:/SFML/External library/SFML/SFML-2.6.2-windows-gcc-13.1.0-mingw-64-bit/SFML-2.6.2/lib\" -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lopengl32 -lfreetype -lwinmm -lgdi32 -luser32 -lshell32 -ladvapi32 -lws2_32"
+        "*.cpp",
+        "-g",
+        "-o",
+        "flappybird.exe",
+        "-mconsole",
+        "-std=c++17",
+        "-Wall",
+        "-DSFML_STATIC",
+        "-I",
+        "E:/SFML/External library/SFML/SFML-2.6.2-windows-gcc-13.1.0-mingw-64-bit/SFML-2.6.2/include",
+        "-L",
+        "E:/SFML/External library/SFML/SFML-2.6.2-windows-gcc-13.1.0-mingw-64-bit/SFML-2.6.2/lib",
+        "-lsfml-graphics-s",
+        "-lsfml-window-s",
+        "-lsfml-audio-s",
+        "-lsfml-system-s",
+        "-lOpenAL32",
+        "-lFLAC",
+        "-lvorbisenc",
+        "-lvorbisfile",
+        "-lvorbis",
+        "-logg",
+        "-lfreetype",
+        "-lopengl32",
+        "-lwinmm",
+        "-lgdi32",
+        "-luser32",
+        "-lshell32",
+        "-ladvapi32",
+        "-lws2_32"
       ],
       "group": {
         "kind": "build",
         "isDefault": true
       },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "panel": "shared"
-      },
-      "problemMatcher": ["$gcc"]
+      "problemMatcher": [
+        "$gcc"
+      ]
     },
     {
-      "label": "Run Flappy Bird",
+      "label": "Run flappybird",
       "type": "shell",
       "command": "./flappybird.exe",
-      "dependsOn": "Build Flappy Bird",
+      "dependsOn": "Build flappybird",
       "group": "test",
       "presentation": {
         "echo": true,

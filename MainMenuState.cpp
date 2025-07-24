@@ -1,7 +1,6 @@
-
 #include <sstream>
 #include "MainMenuState.hpp"
-#include "GameState.hPP"
+#include "GameState.hpp"
 #include "DEFINATIONS.hpp"
 #include <iostream>
 
@@ -12,24 +11,26 @@ namespace CE {
 
     void MainMenuState::Init()
     {
-        // Load texture with key "Main Menu Background"
+        // Load textures
         _data->assets.LoadTexture("Main Menu Background", MAIN_MENU_BACKGROUND_FILEPATH);
-
         _data->assets.LoadTexture("Game Title", GAME_TITLE_FILEPATH);
-
         _data->assets.LoadTexture("Play Button", PLAY_BUTTON_FILEPATH);
 
-        
+        // Set textures to sprites
         _background.setTexture(this->_data->assets.GetTexture("Main Menu Background"));
-
         _title.setTexture(this->_data->assets.GetTexture("Game Title"));
-
         _PlayButton.setTexture(this->_data->assets.GetTexture("Play Button"));
-        _title.setPosition((SCREEN_WIDTH /2) - (_title.getGlobalBounds().width/2), _title.getGlobalBounds().height/2);     //set position of title
-        //Globalbouds is used to retrieve the bounding rectangle of a drawable object
 
-        _PlayButton.setPosition((SCREEN_WIDTH /2) - (_PlayButton.getGlobalBounds().width/2),
-        (SCREEN_HEIGHT /2) - (_PlayButton.getGlobalBounds().height/2) );
+        // Position title and play button in center horizontally
+        _title.setPosition(
+            (SCREEN_WIDTH / 2) - (_title.getGlobalBounds().width / 2),
+            _title.getGlobalBounds().height / 2
+        );
+
+        _PlayButton.setPosition(
+            (SCREEN_WIDTH / 2) - (_PlayButton.getGlobalBounds().width / 2),
+            (SCREEN_HEIGHT / 2) - (_PlayButton.getGlobalBounds().height / 2)
+        );
     }
 
     void MainMenuState::HandleInput()
@@ -37,21 +38,24 @@ namespace CE {
         sf::Event event;
         while (_data->window.pollEvent(event))
         {
-            if (sf::Event::Closed == event.type)
+            if (event.type == sf::Event::Closed)
             {
                 _data->window.close();
             }
-            if(_data->input.IsSpriteClicked( _PlayButton, sf::Mouse::Left, _data->window))
+            else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
             {
-                //Replaces mainmenu state with Game state
-                _data->machine.AddState(StateRef(new GameState(_data)), true);
+                if (_data->input.IsSpriteClicked(_PlayButton, event, _data->window))
+                {
+                    // Switch to GameState
+                    _data->machine.AddState(StateRef(new GameState(_data)), true);
+                }
             }
         }
     }
 
     void MainMenuState::Update(float dt)
     {
-       
+        // No update logic needed here for now
     }
 
     void MainMenuState::Draw(float dt)
