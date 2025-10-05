@@ -51,15 +51,15 @@ namespace CE {
 
         // Position title above container
         _gameOverTitle.setPosition(
-            (_data->window.getSize().x / 2.f) - (_gameOvercontainer.getGlobalBounds().width / 2.f),
+            (_data->window.getSize().x / 2.f) - (_gameOvercontainer.getGlobalBounds().width / 1.5f),
             _gameOvercontainer.getPosition().y - (_gameOverTitle.getGlobalBounds().height * 0.7f)
         );
 
         // Position retry button below container
         _retryButton.setPosition(
-            (_data->window.getSize().x / 2.f) - (_gameOvercontainer.getGlobalBounds().width / 2.f),
+            (_data->window.getSize().x / 2.f) - (_gameOvercontainer.getGlobalBounds().width / 2.75f),
             _gameOvercontainer.getPosition().y + _gameOvercontainer.getGlobalBounds().height +
-            (_retryButton.getGlobalBounds().height * 0.2f)
+            (_retryButton.getGlobalBounds().height * 0.17f)
         );
 
         // Setup score text
@@ -71,7 +71,7 @@ namespace CE {
             _scoreText.getGlobalBounds().width / 2.f,
             _scoreText.getGlobalBounds().height / 2.f
         );
-        _scoreText.setPosition(_data->window.getSize().x / 10.f * 7.25f, _data->window.getSize().y / 2.15f);
+        _scoreText.setPosition(_data->window.getSize().x / 10.f * 7.25f, _data->window.getSize().y / 2.25f);
 
         // Setup high score text
         _highScoreText.setFont(_data->assets.GetFont("Flappy Font"));
@@ -107,7 +107,7 @@ namespace CE {
 
     void GameOverState::Update(float dt)
     {
-        // No update logic needed here currently
+        
     }
 
     void GameOverState::Draw(float dt)
