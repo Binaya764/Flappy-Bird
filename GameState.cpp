@@ -22,7 +22,6 @@ namespace CE {
             std::cout << "Error loading Wing Sound effect" << std::endl;
         }
 
-        // Correctly assign each sound to its own buffer
         _hitSound.setBuffer(_hitSoundBuffer);
         _pointSound.setBuffer(_pointSoundBuffer);
         _wingSound.setBuffer(_wingSoundBuffer);
@@ -38,9 +37,9 @@ namespace CE {
         _data->assets.LoadTexture("Scoring Pipe", SCORING_PIPE_FILEPATH);
         _data->assets.LoadFont("Flappy Font", FLAPPY_FONT_FILEPATH);
 
-        pipe = new Pipe(_data);  // Create pipe object
-        land = new Land(_data);  // Create land object
-        bird = new Bird(_data);  // Create bird object
+        pipe = new Pipe(_data);
+        land = new Land(_data);
+        bird = new Bird(_data);
         hud  = new HUD(_data);
 
         _background.setTexture(_data->assets.GetTexture("Game Background"));
@@ -57,7 +56,6 @@ namespace CE {
             if (event.type == sf::Event::Closed)
                 _data->window.close();
 
-            // Key press detection
             if (event.type == sf::Event::KeyPressed)
             {
                 if (event.key.code == sf::Keyboard::Space || event.key.code == sf::Keyboard::Up)
@@ -71,7 +69,6 @@ namespace CE {
                 }
             }
 
-            // Mouse click detection - only on press event to prevent repeats
             if(event.type == sf::Event::MouseButtonPressed)
             {
                 if(event.mouseButton.button == sf::Mouse::Left)
@@ -138,7 +135,9 @@ namespace CE {
             std::vector<sf::Sprite> &scoringSprites = pipe->GetScoringSprites();
             for (std::size_t i = 0; i < scoringSprites.size(); i++)
             {
-                if (collision.CheckSpriteCollision(bird->GetSprite(), 2.50f, scoringSprites.at(i), 1.50f))
+                if (_gameState == GameStates::ePlaying &&
+                    bird->GetSprite().getPosition().x > scoringSprites.at(i).getPosition().x &&
+                    collision.CheckSpriteCollision(bird->GetSprite(), 2.50f, scoringSprites.at(i), 1.50f))
                 {
                     _score++;
                     hud->UpdateScore(_score);
