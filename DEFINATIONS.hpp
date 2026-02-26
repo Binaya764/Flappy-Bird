@@ -8,9 +8,9 @@
 
 #define SPLASH_SCENE_BACKGROUND_FILEPATH "Resources/res/Splash Background2.png"
 
-#define MAIN_MENU_BACKGROUND_FILEPATH "Resources/res/sky.png"   //file path for main menu
-#define GAME_BACKGROUND_FILEPATH "Resources/res/sky.png"
-#define GAME_OVER_BACKGROUND_FILEPATH "Resources/res/sky.png"
+#define MAIN_MENU_BACKGROUND_FILEPATH "Resources/res/sky1.png"   //file path for main menu
+#define GAME_BACKGROUND_FILEPATH "Resources/res/sky1.png"
+#define GAME_OVER_BACKGROUND_FILEPATH "Resources/res/sky1.png"
 #define GAME_TITLE_FILEPATH "Resources/res/title1.png"
 #define PLAY_BUTTON_FILEPATH "Resources/res/PlayButton2.png"
 #define PIPE_UP_FILEPATH  "Resources/res/PipeUp.png"
