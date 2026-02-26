@@ -1,4 +1,4 @@
-# Flappy Bird Clone 
+# Flappy Bird 
 
 A lightweight, high-performance clone of the famous **Flappy Bird** game. This project is built using **C++** and the **SFML (Simple and Fast Multimedia Library)**, focusing on clean game logic, collision detection, and a physics-based game loop.
 
