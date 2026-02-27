@@ -10,6 +10,8 @@ A lightweight, high-performance clone of the famous **Flappy Bird** game. This p
     <td><img src="Resources/Screenshots/Gameplay.png" width="400"></td>
   </tr>
 </table>
+
+
 ## Gameplay Features
 * **Physics-Based Movement:** Smooth gravity and jumping mechanics.
 * **Infinite Pipe Generation:** Procedurally generated obstacles with varying heights.
@@ -17,7 +19,7 @@ A lightweight, high-performance clone of the famous **Flappy Bird** game. This p
 * **Game State Management:** Includes a "Game Over" screen with an instant restart feature.
 * **Lightweight Graphics:** Uses SFML's shape rendering for maximum compatibility.
 
----
+
 
 ##  Prerequisites
 
